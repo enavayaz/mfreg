@@ -1,0 +1,3 @@
+[submodule "morphomatics"]
+	path = morphomatics
+	url = git@git.zib.de:gdap/morphomatics.git
