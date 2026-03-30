@@ -1,0 +1,4 @@
+morphomatics>=0.1
+numpy
+scipy
+matplotlib
