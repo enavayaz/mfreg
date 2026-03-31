@@ -1,11 +1,11 @@
 import numpy as np
 import numpy.linalg as lg
 import jax
-from util_pred import eval_poly_dc
+from helpers.util_pred import eval_poly_dc
 from jax import random as rnd
 import jax.numpy as jnp
 from morphomatics.stats import ExponentialBarycenter as Mean
-from util import bez_sph
+from helpers.util import bez_sph
 eps = 1e-8
 
 def map2D3D(x, y, uniform=True):

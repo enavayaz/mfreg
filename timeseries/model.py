@@ -26,7 +26,7 @@ import jax
 import jax.numpy as jnp
 
 from timeseries.verification_metrics import errfun
-from util_pred import diff
+from helpers.util_pred import diff
 from morphomatics.manifold import Euclidean
 from timeseries.reg import RidgeRegression
 from timeseries.reg import PolyRegression
