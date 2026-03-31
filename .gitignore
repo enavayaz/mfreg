@@ -5,5 +5,4 @@ log.txt
 __pycache__/
 *.py[cod]
 *$py.class
-/morphomatics/
 /datasets/

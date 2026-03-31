@@ -198,7 +198,7 @@ def add_gauss_noise(
     return Y_noisy
 
 # ============================================================================
-# Generate HIGHLY CORRELATED trajectories
+# Generate CORRELATED trajectories
 # ============================================================================
 
 def sph_correlated_trjs(lon_max, lat_max, n_trj=30, n_points=40, noise_std=0.03, mean_curve='Else'):
@@ -228,16 +228,6 @@ def sph_correlated_trjs(lon_max, lat_max, n_trj=30, n_points=40, noise_std=0.03,
     # Generate correlated trajectories
     Y = []
     for i in range(n_trj):
-        # n_points_i = np.random.randint(int(0.8*n_points), int(1.2*n_points))
-        #
-        # # Interpolate template
-        # if n_points_i != n_template:
-        #     indices = np.linspace(0, n_template-1, n_points_i)
-        #     template_i = np.array([np.interp(indices, np.arange(n_template), template[:, d])
-        #                            for d in range(3)]).T
-        #     template_i = template_i / lg.norm(template_i, axis=1, keepdims=True)
-        # else:
-        #     template_i = template.copy()
         template_i, n_points_i = template.copy(), n_points
         # Add small correlated noise
         noisy_trj = np.zeros((n_points_i, 3))
@@ -286,48 +276,15 @@ def sph_rand_trjs(lon_max, lat_max, n_trj=30, n_points=30, uniform=True):
         Y.append(np.array([z[0], z[1], z[2]]).T)
     return Y
 
-def save_sph(B, Y, strTemp='Else'):
+def save_sph(B, Y, strTemp='Sin'):
     path = '../datasets/sph' + strTemp + '.npz'
     np.savez(path, B=B, Y=np.array(Y, dtype=object))
 
-def load_sph(strTemp='Else'):
+def load_sph(strTemp='Sin'):
     path = '../datasets/sph' + strTemp + '.npz'
     data = np.load(path, allow_pickle=True)
     B, Y = data['B'], data['Y'].tolist()
     return B, [np.array(y) for y in Y]
-
-#==========================================
-# SPD Random
-#==========================================
-
-# Random SPD Trajectories
-def randA_spd(dim=2):
-    A = np.random.randn(dim, dim)
-    return np.dot(A, A.T)
-
-def rand_spd_exp(dim=2):
-    from scipy.linalg import expm
-    A = np.random.randn(dim, dim)
-    A_sym = (A + A.T) / 2  # make symmetric
-    return expm(A_sym)
-
-def rand_spd(dim=2):
-    D = np.eye(dim)
-    D[0, 0] = np.random.uniform(.5, 1.5)  # or exponential, etc.
-    D[1, 1] = np.random.uniform(2.5, 3.5)
-    #Q, _ = np.linalg.qr(np.random.randn(dim, dim))  # random orthogonal
-    phi = np.random.uniform(-np.pi/20, np.pi/20)
-    Q = np.array([[np.cos(phi), -np.sin(phi)], [np.sin(phi), np.cos(phi)]])
-    return Q @ D @ Q.T
-
-def generate_rand_trj(n_subj=10, n_points=50, dim=2):
-    Y =[]
-    for i in range(n_subj):
-        spd = np.zeros((n_points, dim, dim))
-        for j in range(n_points):
-            spd[j] = rand_spd(dim)
-        Y += [spd]
-    return Y
 
 #==========================================
 # PGA
