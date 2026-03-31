@@ -15,8 +15,6 @@ from timeseries.bezier_polynom import BezierPolynom
 
 S2 = Sphere()
 dim = 3
-N_SUBJ, N_SAMPLES = 218, 32
-YEAR_SUBJ = [21, 41, 60, 75, 84, 96, 112, 130, 146, 166, 197, 218]
 distance = lambda y, z: lg.norm(y - z)
 r2 = lambda y, y_pred: (r2_score(y, y_pred))
 rel_err = lambda y, y_pred: lg.norm((y - y_pred)) / lg.norm(y)
