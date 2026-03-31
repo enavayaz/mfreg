@@ -1,21 +1,12 @@
 import matplotlib
-matplotlib.use('TkAgg')
-from matplotlib.lines import Line2D
-from ipywidgets import interact, interactive, fixed, interact_manual
-import ipywidgets as widgets
+#matplotlib.use('TkAgg')
 import matplotlib.pylab as plt
 from matplotlib import ticker
-import matplotlib.pyplot as pylt
 import jax
 import jax.numpy as jnp
 import numpy as np
 import pandas as pd
 from math import *
-from morphomatics.geom import BezierSpline
-from morphomatics.manifold import Sphere, CubicBezierfold, Manifold, Euclidean
-from morphomatics.stats import ExponentialBarycenter
-from PIL import Image
-# import pillow
 try:
     from mpl_toolkits.mplot3d import Axes3D
     from mpl_toolkits.basemap import Basemap
@@ -40,18 +31,6 @@ STR_MAXWIND = 'Maximum sustained wind in knots'
 # import imageio
 # matplotlib.use("Agg")  # NOQA
 eps = 1e-8
-
-def initial_mean(pu, M: Manifold):
-    """
-    Initialize mean geodesic
-    """
-    # compute mean of base points
-    mean_p = ExponentialBarycenter.compute(M, pu[:, 0])
-    # compute mean of tangent vectors
-    PT = lambda p, u: M.metric.transp(p, mean_p.estimate_, mean_p)
-    mean_v = np.mean([PT(*pu_i) for pu_i in pu], 0)
-    return np.array([mean_p, mean_v])
-
 
 def visSphere(points_list, color_list, size=20, nice=True):
     """
@@ -96,19 +75,6 @@ def visSphere(points_list, color_list, size=20, nice=True):
 def load_data_hur():
     # path = 'hur.csv'
     return pd.read_csv('../datasets/hur.csv', header=None)
-
-def load_splines():
-    S2 = Sphere()
-    cBfS2 = CubicBezierfold(S2, 1)
-    CP_file = np.load('../datasets/splines.npz')
-
-    splines_S2 = []
-    max_wind_spline_coefficients = []
-    for P, c in zip(CP_file['cubic_CP_S2'], CP_file['coeff_wind']):
-        splines_S2.append(cBfS2.from_velocity_representation(P))
-        max_wind_spline_coefficients.append(c)
-
-    return splines_S2, max_wind_spline_coefficients
 
 # Earth Science
 def coord_2D3D(lat, lon, h=0.0):
@@ -207,11 +173,6 @@ def visEarth(seq_list, cat_list, title=None, c_map=cmap_cat):
     #plt.savefig('orthographic_map_example_python.png', dpi=150, transparent=True)
     #plt.savefig('figures/tracks.png')
     plt.show(block=True)
-
-
-def sample_spline(B: BezierSpline, n: int = 50) -> np.array:
-    """Sample a Bezier spline at n evenly spaced points"""
-    return np.array(jax.vmap(B.eval)(jnp.linspace(0, B.nsegments, n)))
 
 
 def bez_sph(n_points):
