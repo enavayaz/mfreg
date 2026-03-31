@@ -277,11 +277,11 @@ def sph_rand_trjs(lon_max, lat_max, n_trj=30, n_points=30, uniform=True):
     return Y
 
 def save_sph(B, Y, strTemp='Sin'):
-    path = '../datasets/sph' + strTemp + '.npz'
+    path = 'datasets/sph' + strTemp + '.npz'
     np.savez(path, B=B, Y=np.array(Y, dtype=object))
 
 def load_sph(strTemp='Sin'):
-    path = '../datasets/sph' + strTemp + '.npz'
+    path = 'datasets/sph' + strTemp + '.npz'
     data = np.load(path, allow_pickle=True)
     B, Y = data['B'], data['Y'].tolist()
     return B, [np.array(y) for y in Y]
