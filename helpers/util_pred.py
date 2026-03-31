@@ -1,7 +1,6 @@
 # Importing Libraries and Packages
 import numpy as np
 from numpy import linalg as lg
-import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, r2_score
 import jax
 import jax.numpy as jnp
@@ -29,18 +28,6 @@ def svd_symmetric(A):
     v[:, s < 0] = -u[:, s < 0]  # replacing the corresponding columns with negative sign
     s = abs(s)
     return [u, s, v.T]
-
-
-def load_hur(path, sph=True, wind=True):
-    data = np.load(path, allow_pickle=True)
-    subj, seq, ids, info = data['subj'], data['seq'], data['ids'], data['info']
-    H = [seq[ids[i]:ids[i] + subj[i, 2], (3, 4, 5, 7, 8, 9, 2)] for i in range(N_SUBJ)]
-    #if onlyhur is True:  # only hurricanes
-    #    H = [H[i] for i in np.nonzero([0 if np.max(h[:, 2]) < 34 else 1 for h in H])[0]]
-    a = (3, 4, 5) if sph is True else (0, 1)
-    if wind == True: a = (*a, 2)
-    H = [h[:, (*a, 6)] for h in H]
-    return H
 
 
 def cov_mat(log, y, mean_y):
@@ -137,28 +124,6 @@ def opt_cov(Y, cov_inv, predfun, n_learn=1, n_pred=4):
     return S
 
 
-def display_data(x, Y, n_pred=1, title=None, colors=None, legend=None):
-    fig = plt.figure()
-    plt.scatter(x, Y[0], s=20, marker='o', label='Data')
-    plt.plot(x, Y[0], '-', c='b', linewidth=1)
-    leg = ["Data"]
-    if len(Y) > 1:
-        #plt.plot(x, Y[1], c='gray', label='Fitted', linewidth=1)
-        #leg += ["Fitted"]
-        if len(Y) > 2:
-            leg += ["Forecast"]
-            #plt.plot(x[:n_learn], y[:n_learn], '--', c='orange', label='Estimated')
-            #leg += ["Estimated"]
-            plt.scatter(x[n_pred:], Y[2], s=15, c='red', marker='*', label='Forecast')
-            plt.plot(x[n_pred:], Y[3], '--', c='red', linewidth=1)
-    #plt.scatter(x, Y[0], s=10, label='Data')
-    #plt.title("Test Data") if title is None else plt.title(title)
-    plt.xlabel("Lifetime of hurricane (days)", fontsize=12)
-    plt.ylabel("Intensity (knots)", fontsize=12)
-    plt.legend(fontsize=12)
-    plt.show()
-
-
 eval_poly_hur = lambda b, x: jax.vmap(BezierPolynom(S2, b).eval)(x)
 
 
@@ -201,15 +166,6 @@ def avg_replace(avg, a, y, n):
             y[i] = avg(y[i], y[i - 1])
     return y
 
-def amae_nhc(H_test, Y_pred, n_pred=4, dist=distance):
-    amae = []
-    for k in range(len(H_test)):
-        h, p = H_test[k][n_pred:], Y_pred[k]
-        ix = np.where(h[:, -1] > 0)[0]
-        #ix = ix[np.remainder(ix[0], n_pred):]
-        for i in ix[:-n_pred]:  #ix:
-            amae += [dist(h[i, :-1], p[i])]
-    return amae
 
 def diff(M: manifold.Manifold, y, ref=None):
     if ref is None:
