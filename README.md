@@ -10,7 +10,7 @@ Prediction](https://arxiv.org/abs/2411.18339.pdf)**
 <!--- >[![Preprint](https://)](https://opus4.kobv.de/opus4-zib/citationExport/index/download/output/bibtex/) --->
 
 ## Colab Notebook
-You can run the synthetic validation tests directly in your browser:
+You can run the synthetic validation tests directly in your browser (ensure you clone the repository and add the root directory to your system path to enable the timeseries and helper modules):
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/enavayaz/mfreg/blob/main/notebooks/synthetic_test.ipynb)
 
 ## Local Installation
