@@ -6,6 +6,7 @@ from jax import random as rnd
 import jax.numpy as jnp
 from morphomatics.stats import ExponentialBarycenter as Mean
 from helpers.util import bez_sph
+import os
 eps = 1e-8
 
 def map2D3D(x, y, uniform=True):
@@ -277,11 +278,13 @@ def sph_rand_trjs(lon_max, lat_max, n_trj=30, n_points=30, uniform=True):
     return Y
 
 def save_sph(B, Y, strTemp='Sin'):
-    path = 'datasets/sph' + strTemp + '.npz'
+    filename = f'sph{strTemp}.npz'
+    path = os.path.join('datasets', filename)
     np.savez(path, B=B, Y=np.array(Y, dtype=object))
 
 def load_sph(strTemp='Sin'):
-    path = 'datasets/sph' + strTemp + '.npz'
+    filename = f'sph{strTemp}.npz'
+    path = os.path.join('datasets', filename)
     data = np.load(path, allow_pickle=True)
     B, Y = data['B'], data['Y'].tolist()
     return B, [np.array(y) for y in Y]
