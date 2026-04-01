@@ -3,15 +3,13 @@ import matplotlib.pylab as plt
 from matplotlib import ticker
 import jax.numpy as jnp
 import numpy as np
-import pandas as pd
 from math import *
 try:
     from mpl_toolkits.mplot3d import Axes3D
     from mpl_toolkits.basemap import Basemap
 except: print('mpl_toolkits not available')
 from matplotlib import cm as cm
-import matplotlib.patches as mpatches
-colors = {0: "b", 1: "orange", 2: "r"}
+
 cmap_cat = cm.get_cmap('jet')
 # %matplotlib inline
 # import imageio
