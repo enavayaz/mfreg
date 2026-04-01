@@ -1,19 +1,8 @@
-#matplotlib.use('TkAgg')
-import matplotlib.pylab as plt
-from matplotlib import ticker
+# matplotlib.use('TkAgg')  # matplotlib.use("Agg")  # NOQA
 import jax.numpy as jnp
 import numpy as np
-from math import *
-try:
-    from mpl_toolkits.mplot3d import Axes3D
-    from mpl_toolkits.basemap import Basemap
-except: print('mpl_toolkits not available')
-from matplotlib import cm as cm
+import os
 
-cmap_cat = cm.get_cmap('jet')
-# %matplotlib inline
-# import imageio
-# matplotlib.use("Agg")  # NOQA
 eps = 1e-8
 
 def visSphere(points_list, color_list, size=20, nice=True):
@@ -80,7 +69,7 @@ def coord_2D3D(lat, lon, h=0.0):
 
 def coord_3D2D(xyz):
     x, y, z = xyz[0], xyz[1], xyz[2]
-    lat = np.sign(z)*180*np.arctan(z/sqrt(x**2 + y**2))/np.pi
+    lat = np.sign(z)*180*np.arctan(z/np.sqrt(x**2 + y**2))/np.pi
     lon = 180*np.arctan2(y, x)/np.pi # West is negative
     return lat, lon
 
@@ -139,7 +128,6 @@ def bez_sph(n_points):
                 b_j_i = slerp(points[i], points[i+1], t)
                 new_points.append(b_j_i)
             points = new_points
-
         return points[0]
 
     # 5. Compute the Curve Points
@@ -177,5 +165,17 @@ def generate_on_vec(M, p, u, key):
     # Scale V_raw so that its Riemannian norm is exactly 1.0
     norm_v = jnp.sqrt(M.metric.inner(p, v_raw, v_raw))
     v = v_raw / (norm_v + 1e-10)
-
     return v
+
+
+def save_sph(B, Y, strTemp='Sin'):
+    filename = f'sph{strTemp}.npz'
+    path = os.path.join('datasets', filename)
+    np.savez(path, B=B, Y=np.array(Y, dtype=object))
+
+def load_sph(strTemp='Sin'):
+    filename = f'sph{strTemp}.npz'
+    path = os.path.join('datasets', filename)
+    data = np.load(path, allow_pickle=True)
+    B, Y = data['B'], data['Y'].tolist()
+    return B, [np.array(y) for y in Y]
