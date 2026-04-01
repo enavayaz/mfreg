@@ -335,4 +335,3 @@ class PrincipalGeodesicAnalysis(object):
         coeffs = v @ vecs[:,:e:-1]
 
         return variances, modes, coeffs
-
