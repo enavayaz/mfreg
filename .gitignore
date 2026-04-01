@@ -5,4 +5,25 @@ log.txt
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Datasets
 /datasets/
+
+# Untracked notebooks (temporary/submission work)
+notebooks/subm_*.ipynb
+notebooks/synthetic_testX.ipynb
+notebooks/visxx.py
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
