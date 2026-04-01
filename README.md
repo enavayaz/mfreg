@@ -15,6 +15,8 @@ You can run the synthetic validation tests directly in your browser (ensure you 
 the root directory to your system path to enable the modules):
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/enavayaz/mfreg/blob/main/notebooks/synthetic_test.ipynb)
 
+Note: If you encounter import errors, try Runtime → Disconnect and delete runtime, then re-run cells to get a fresh environment.
+
 ## Binder
 You can also launch the notebook in a fully reproducible environment via Binder (no setup required):
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/enavayaz/mfreg/HEAD?labpath=notebooks%2Fsynthetic_test.ipynb)
