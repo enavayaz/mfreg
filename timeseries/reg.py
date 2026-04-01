@@ -1,9 +1,5 @@
 from functools import partial, cached_property
-
-from statsmodels.stats.outliers_influence import variance_inflation_factor
-
 from timeseries.bezier_polynom import BezierPolynom
-#from morphomatics.geom import BezierSpline
 from morphomatics.manifold import Manifold, PowerManifold
 from morphomatics.opt import RiemannianSteepestDescent
 from morphomatics.stats import ExponentialBarycenter
