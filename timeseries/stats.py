@@ -188,7 +188,7 @@ def add_gauss_noise(
 
         # Normalize to ensure isotropic direction if desired,
         # or leave as is for true Gaussian scaling.
-        # Here we follow your convention of fixed-magnitude directional noise:
+        # Here we follow the convention of fixed-magnitude directional noise:
         noise_direction = noise_direction / (np.linalg.norm(noise_direction) + eps)
 
         # Apply independent noise
