@@ -1,7 +1,7 @@
 # Importing Libraries and Packages
 import numpy as np
 from numpy import linalg as lg
-from sklearn.metrics import mean_squared_error, r2_score
+#from sklearn.metrics import mean_squared_error, r2_score
 import jax
 import jax.numpy as jnp
 from morphomatics.manifold import Sphere, Manifold, Euclidean
@@ -16,7 +16,7 @@ from timeseries.bezier_polynom import BezierPolynom
 S2 = Sphere()
 dim = 3
 distance = lambda y, z: lg.norm(y - z)
-r2 = lambda y, y_pred: (r2_score(y, y_pred))
+#r2 = lambda y, y_pred: (r2_score(y, y_pred))
 rel_err = lambda y, y_pred: lg.norm((y - y_pred)) / lg.norm(y)
 
 
