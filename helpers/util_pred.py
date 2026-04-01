@@ -2,9 +2,9 @@ import numpy as np
 from numpy import linalg as lg
 import jax
 import jax.numpy as jnp
+import jax.lax as lax
 from morphomatics.manifold import Manifold
 from typing import Tuple, List
-import jax.lax as lax
 from timeseries.reg import PolyRegression as PolyReg
 
 def cov_mat(log, y, mean_y):

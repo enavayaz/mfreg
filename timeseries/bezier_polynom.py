@@ -1,12 +1,9 @@
 # postponed evaluation of annotations to circumvent cyclic dependencies (will be default behavior in Python 4.0)
 from __future__ import annotations
-# from morphomatics.manifold import Manifold
-
 import numpy as np
 import jax
 import jax.numpy as jnp
 import jax.lax as lax
-
 from typing import Tuple, List
 from morphomatics.manifold import Manifold
 

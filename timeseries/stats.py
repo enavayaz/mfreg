@@ -1,11 +1,11 @@
 import numpy as np
 import numpy.linalg as lg
 import jax
-from helpers.util_pred import eval_poly_dc
-from jax import random as rnd
 import jax.numpy as jnp
+from jax import random as rnd
 from morphomatics.stats import ExponentialBarycenter as Mean
 from helpers.util import bez_sph
+from helpers.util_pred import eval_poly_dc
 
 eps = 1e-8
 
@@ -16,7 +16,6 @@ def map2D3D(x, y, uniform=True):
     else:
         Z = np.cos(y)*np.cos(x), np.cos(y)*np.sin(x), np.sin(y)  # central distribution
     return Z
-#map2D3D = jax.vmap(map2D3D)
 
 
 def generate_polynomial_series(M,
