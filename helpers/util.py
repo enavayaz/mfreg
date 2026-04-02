@@ -1,9 +1,10 @@
 # matplotlib.use('TkAgg')  # matplotlib.use("Agg")  # NOQA
 import jax.numpy as jnp
 import numpy as np
-import os
+from pathlib import Path
 
 eps = 1e-8
+DEFAULT_DATA_DIR = Path(__file__).resolve().parent.parent / "datasets"
 
 def visSphere(points_list, color_list, size=20, nice=True):
     """
@@ -168,14 +169,16 @@ def generate_on_vec(M, p, u, key):
     return v
 
 
-def save_sph(B, Y, strTemp='Sin'):
-    filename = f'sph{strTemp}.npz'
-    path = os.path.join('datasets', filename)
+def save_sph(B, Y, name, target_dir=DEFAULT_DATA_DIR):
+    target_dir.mkdir(parents=True, exist_ok=True)
+    path = target_dir / f'{name}.npz'
     np.savez(path, B=B, Y=np.array(Y, dtype=object))
 
-def load_sph(strTemp='Sin'):
-    filename = f'sph{strTemp}.npz'
-    path = os.path.join('datasets', filename)
+
+def load_sph(name, target_dir=DEFAULT_DATA_DIR):
+    path = target_dir / f'{name}.npz'
+    if not path.exists():
+        raise FileNotFoundError(f'No file found at {path}')
     data = np.load(path, allow_pickle=True)
     B, Y = data['B'], data['Y'].tolist()
     return B, [np.array(y) for y in Y]
